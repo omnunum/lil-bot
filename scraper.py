@@ -4,12 +4,13 @@
 import tweepy #https://github.com/tweepy/tweepy
 import csv
 import pandas as pd
+import markov
 
 #Twitter API credentials
 consumer_key = "BB3TrvSEOM9jTC6nqCsTBRz9O"
 consumer_secret = "2f6miJPcxmUEbwL6XX93UK9o27Sysq49tqYOBiv1SlPIBCcKd6"
-access_key = ""
-access_secret = ""
+access_key = "577497821-TG8PZ83EKMJdBxad0FfuiFl7DgGtkZOgVJuWmF5J"
+access_secret = "7V9UDzWh2QjTxvwmTvg6K11SL8MuxhEPX3GHYdntj4vPM"
 
 def init_tweepy():
     #authorize twitter, initialize tweepy
@@ -26,8 +27,12 @@ def download_new_tweets(screen_name):
     comp = pd.concat([csv_tweets, api_tweets_cleaned], axis=0, ignore_index=True).drop_duplicates(subset='text', take_last=True).sort('id', ascending=False)
     comp.to_csv('tweets.csv', index=False)
     return comp
+def send_tweet(tweet):
+    api = init_tweepy()
+    api.update_status(tweet)
     
 if __name__ == '__main__':
     #pass in the username of the account you want to download
-    #download_new_tweets("lilbthebasedgod")
+    download_new_tweets('lilbthebasedgod')
+    send_tweet(markov.build_tweet())
     pass
