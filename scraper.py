@@ -2,7 +2,6 @@
 # encoding: utf-8
 
 import tweepy #https://github.com/tweepy/tweepy
-import csv
 import pandas as pd
 import markov
 

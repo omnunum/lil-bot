@@ -23,10 +23,10 @@ def generate_model_from_csv(path):
     return model
 
 def get_next_word(model, word):
-    return choice(model[word])
+    return rnd.choice(model[word])
 
 def get_first_word(model):
-    return choice(model.keys())
+    return rnd.choice(model.keys())
     
 def build_tweet():
     model = generate_model_from_csv('tweets.csv')
