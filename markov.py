@@ -45,6 +45,6 @@ def build_tweet():
         else:
             tweet += next_word + ' '
         prev_word = next_word
-    return (tweet + signature, len(tweet + signature))
+    return tweet + signature
     
     

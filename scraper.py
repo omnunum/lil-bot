@@ -11,6 +11,7 @@ consumer_secret = "2f6miJPcxmUEbwL6XX93UK9o27Sysq49tqYOBiv1SlPIBCcKd6"
 access_key = "577497821-TG8PZ83EKMJdBxad0FfuiFl7DgGtkZOgVJuWmF5J"
 access_secret = "7V9UDzWh2QjTxvwmTvg6K11SL8MuxhEPX3GHYdntj4vPM"
 
+
 def init_tweepy():
     #authorize twitter, initialize tweepy
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
