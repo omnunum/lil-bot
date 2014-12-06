@@ -9,7 +9,7 @@ import re
 from collections import defaultdict
 import random as rnd
 
-def generate_model_from_csv(path):
+def generate_model_from_csv(path, order):
     tweets = pd.read_csv(path)['text']
     #doing some cleaning
     tweets = [re.sub(r'!+|\(|\"', '', re.sub(r'( +- +Lil B$)', '', tweet)) for tweet in tweets]
@@ -18,8 +18,8 @@ def generate_model_from_csv(path):
     for tweet in tweets:
         words = str(tweet).lower().strip().split(' ')
         for i, word in enumerate(words):
-            if i < len(words) - 2:
-                model[word].append(words[i+1])
+            if i < len(words) - order - 1:
+                model[word].append(' '.join(words[i+1:i+1+order]).strip())
     return model
 
 def get_next_word(model, word):
@@ -29,7 +29,8 @@ def get_first_word(model):
     return rnd.choice(model.keys())
     
 def build_tweet():
-    model = generate_model_from_csv('tweets.csv')
+    model = generate_model_from_csv('tweets.csv', 5)
+    print model
     prev_word = get_first_word(model)
     tweet = prev_word + ' '
     signature = ' - Lil B'
@@ -37,7 +38,7 @@ def build_tweet():
     
     while len(tweet) < limit:
         try:
-            next_word = get_next_word(model, prev_word)
+            next_word = get_next_word(model, prev_word.split(' ')[-1])
         except IndexError:
             break
         if len(tweet) + len(next_word + ' ') > limit:

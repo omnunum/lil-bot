@@ -4,6 +4,7 @@
 import tweepy #https://github.com/tweepy/tweepy
 import pandas as pd
 import markov
+import os 
 
 #Twitter API credentials
 consumer_key = "BB3TrvSEOM9jTC6nqCsTBRz9O"
@@ -23,10 +24,11 @@ def download_new_tweets(screen_name):
     api_tweets_raw = pd.DataFrame([[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in api.user_timeline(screen_name = screen_name,count=200)], columns=['id', 'created_at', 'text'])
     api_tweets_cleaned = api_tweets_raw[~api_tweets_raw['text'].str.contains('@|http')]
     api_tweets_cleaned = api_tweets_cleaned.applymap(lambda x: x.replace('\n', ' ') if isinstance(x, basestring) else x)
-    csv_tweets = pd.read_csv('tweets.csv')
+    csv_tweets = pd.read_csv(os.path.realpath('tweets.csv'))
     comp = pd.concat([csv_tweets, api_tweets_cleaned], axis=0, ignore_index=True).drop_duplicates(subset='text', take_last=True).sort('id', ascending=False)
-    comp.to_csv('tweets.csv', index=False)
+    comp.to_csv(os.path.realpath('tweets.csv'), index=False)
     return comp
+    
 def send_tweet(tweet):
     api = init_tweepy()
     api.update_status(tweet)
