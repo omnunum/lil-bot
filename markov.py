@@ -30,7 +30,6 @@ def get_first_word(model):
     
 def build_tweet():
     model = generate_model_from_csv('tweets.csv', 5)
-    print model
     prev_word = get_first_word(model)
     tweet = prev_word + ' '
     signature = ' - Lil B'
