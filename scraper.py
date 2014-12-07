@@ -7,10 +7,10 @@ import markov
 import os, sys
 
 #Twitter API credentials
-consumer_key = "BB3TrvSEOM9jTC6nqCsTBRz9O"
-consumer_secret = "2f6miJPcxmUEbwL6XX93UK9o27Sysq49tqYOBiv1SlPIBCcKd6"
-access_key = "577497821-TG8PZ83EKMJdBxad0FfuiFl7DgGtkZOgVJuWmF5J"
-access_secret = "7V9UDzWh2QjTxvwmTvg6K11SL8MuxhEPX3GHYdntj4vPM"
+consumer_key = ""
+consumer_secret = ""
+access_key = ""
+access_secret = ""
 
 
 def init_tweepy():
