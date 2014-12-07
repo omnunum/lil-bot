@@ -10,11 +10,13 @@ from collections import defaultdict
 import random as rnd
 
 def generate_model_from_csv(path, order):
+    #grabs the text data from all the tweet entries
     tweets = pd.read_csv(path)['text']
-    #doing some cleaning
+    #doing some cleaning, removing some characters that throw everything off
+    #also removes the variably spaced signature
     tweets = [re.sub(r'!+|\(|\"', '', re.sub(r'( +- +Lil B$)', '', tweet)) for tweet in tweets]
-    model = defaultdict(list)
     
+    model = defaultdict(list)
     for tweet in tweets:
         words = str(tweet).lower().strip().split(' ')
         for i, word in enumerate(words):
@@ -33,10 +35,14 @@ def build_tweet():
     prev_word = get_first_word(model)
     tweet = prev_word + ' '
     signature = ' - Lil B'
+    
+    #makes sure our tweet fits the 140 limit, also includes an additional 
+    #random limit to vary the length of the tweets
     limit = (140 - len(signature)) - rnd.randrange(0, 40)
     
     while len(tweet) < limit:
         try:
+            #we use the last word of the returned chain entry of the specified order to lookup the next chain
             next_word = get_next_word(model, prev_word.split(' ')[-1])
         except IndexError:
             break
