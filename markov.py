@@ -31,14 +31,14 @@ def get_first_word(model):
     return rnd.choice(model.keys())
     
 def build_tweet():
-    model = generate_model_from_csv('tweets.csv', 5)
+    model = generate_model_from_csv('tweets.csv', 4)
     prev_word = get_first_word(model)
     tweet = prev_word + ' '
     signature = ' - Lil B'
     
     #makes sure our tweet fits the 140 limit, also includes an additional 
     #random limit to vary the length of the tweets
-    limit = (140 - len(signature)) - rnd.randrange(0, 40)
+    limit = (140 - len(signature)) - rnd.randrange(0, 20)
     
     while len(tweet) < limit:
         try:
@@ -51,6 +51,11 @@ def build_tweet():
         else:
             tweet += next_word + ' '
         prev_word = next_word
-    return tweet + signature
+    #checks to see if the last word is in list of prepositions and pronouns
+    words = tweet.split(' ')[:-2]
+    with open('preps_and_pros.txt', 'r') as pnp:
+        while words[-1] in pnp.read().split('\n'):
+            words.pop()
+    return ' '.join(words) + signature
     
     
